@@ -79,32 +79,7 @@ header{
   object-fit:cover;
   cursor:pointer;
 }
-/* ===== メイン画像をスワイプ対応にする ===== */
 
-/* ===== メイン画像スライダー ===== */
-
-.image-slider{
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  width:100%;
-}
-
-.image-slider img{
-  width:100%;
-  min-width:100%;   /* ← これ重要 */
-  flex-shrink:0;
-  scroll-snap-align:start;
-  aspect-ratio:4/3;
-  object-fit:cover;
-  cursor:pointer;
-}
-
-.image-slider::-webkit-scrollbar{
-  display:none;
-}
-}
 .sub-images{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -163,28 +138,6 @@ header{
   max-width:90%;
   max-height:90%;
   border-radius:14px;
-}.image-wrapper {
-  overflow: hidden;
-}
-
-.image-slider {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.image-slider img {
-  width: 100%;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-}
-
-/* スクロールバー非表示 */
-.image-slider::-webkit-scrollbar {
-  display: none;
 }
 </style>
 </head>
@@ -206,11 +159,8 @@ header{
   <!-- 投稿例 -->
   <div class="card" data-tags="和食 横浜">
 
-<div class="image-slider">
-  <img src="images/shinryoku1.jpg" onclick="openModal(this.src)">
-  <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
-  <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
-</div>
+    <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
+
     <div class="sub-images">
       <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
       <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
