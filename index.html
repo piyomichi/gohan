@@ -138,6 +138,28 @@ header{
   max-width:90%;
   max-height:90%;
   border-radius:14px;
+}.image-wrapper {
+  overflow: hidden;
+}
+
+.image-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.image-slider img {
+  width: 100%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+/* スクロールバー非表示 */
+.image-slider::-webkit-scrollbar {
+  display: none;
 }
 </style>
 </head>
