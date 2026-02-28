@@ -80,34 +80,64 @@
   </style>
 </head>
 
-<body>
 
-<div style="max-width:900px; margin:40px auto;">
+<body style="margin:0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background:#fafafa;">
 
-  <h2 style="text-align:center;">おにぎり割烹 新緑</h2>
+  <h1 style="text-align:center; padding:20px 0; margin:0;">
+    🍙 ごはん記録
+  </h1>
 
   <div style="
+    max-width:1000px;
+    margin:0 auto;
+    padding:20px;
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap:10px;
-    margin-top:20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+    gap:30px;
   ">
 
-    <img src="images/shinryoku1.jpg"
-         style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;">
+    <!-- 投稿カード -->
+    <div style="
+      background:white;
+      border-radius:16px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.06);
+      overflow:hidden;
+    ">
 
-    <img src="images/shinryoku2.jpg"
-         style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;">
+      <!-- 画像エリア -->
+      <div style="
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:5px;
+      ">
 
-    <img src="images/shinryoku3.jpg"
-         style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;">
+        <img src="images/shinryoku1.jpg"
+             style="width:100%; aspect-ratio:1/1; object-fit:cover;">
+
+        <img src="images/shinryoku2.jpg"
+             style="width:100%; aspect-ratio:1/1; object-fit:cover;">
+
+        <img src="images/shinryoku3.jpg"
+             style="width:100%; aspect-ratio:1/1; object-fit:cover; grid-column: span 2;">
+      </div>
+
+      <!-- テキストエリア -->
+      <div style="padding:15px;">
+
+        <h3 style="margin:0 0 8px 0;">おにぎり割烹 新緑</h3>
+
+        <p style="margin:0; color:#555; font-size:14px;">
+          石川町｜鯛茶漬けセット ¥1,680
+        </p>
+
+        <p style="margin-top:8px; font-size:12px; color:#888;">
+          #和食 #横浜
+        </p>
+
+      </div>
+    </div>
 
   </div>
 
-  <p style="text-align:center; margin-top:15px;">
-    石川町｜鯛茶漬けセット ¥1,680
-  </p>
-
-</div>
 </body>
 </html>
