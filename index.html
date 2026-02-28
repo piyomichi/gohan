@@ -1,143 +1,173 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>おすすめお店まとめ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ごはん記録</title>
 
-  <style>
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-      color: #333;
-    }
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#fafafa;
+}
 
-    header {
-      background: #8B5A2B;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 20px;
-      font-weight: bold;
-    }
+/* ヘッダー */
+header{
+  text-align:center;
+  padding:20px 0;
+  font-size:22px;
+  font-weight:bold;
+  background:white;
+  border-bottom:1px solid #eee;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+/* ストーリーズ */
+.stories{
+  display:flex;
+  overflow-x:auto;
+  gap:15px;
+  padding:15px;
+  background:white;
+}
+.story{
+  text-align:center;
+  font-size:12px;
+}
+.story img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #ff8501;
+}
 
-    .shop-card {
-      background: white;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: 0.2s;
-    }
+/* 投稿グリッド */
+.container{
+  max-width:1000px;
+  margin:30px auto;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:30px;
+}
 
-    .shop-card:hover {
-      transform: translateY(-3px);
-    }
+.card{
+  background:white;
+  border-radius:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+  overflow:hidden;
+}
 
-    .shop-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+/* 画像レイアウト */
+.main-img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  cursor:pointer;
+}
 
-    .shop-image {
-      width: 100%;
-      border-radius: 10px;
-      margin: 10px 0;
-    }
+.sub-images{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+}
 
-    .shop-info {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+.sub-images img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  cursor:pointer;
+}
 
-    .map-button {
-      display: inline-block;
-      background: #4CAF50;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 13px;
-    }
+.text{
+  padding:15px;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: gray;
-    }
-  </style>
+.text h3{
+  margin:0 0 8px 0;
+}
+
+.text p{
+  margin:0;
+  font-size:14px;
+  color:#555;
+}
+
+/* 画像拡大モーダル */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
+</style>
 </head>
 
+<body>
 
-<body style="margin:0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background:#fafafa;">
+<header>🍙 ごはん記録</header>
 
-  <h1 style="text-align:center; padding:20px 0; margin:0;">
-    🍙 ごはん記録
-  </h1>
+<!-- ストーリーズ風 -->
+<div class="stories">
+  <div class="story">
+    <img src="images/shinryoku1.jpg">
+    <div>新緑</div>
+  </div>
+  <div class="story">
+    <img src="images/shinryoku1.jpg">
+    <div>カフェ</div>
+  </div>
+</div>
 
-  <div style="
-    max-width:1000px;
-    margin:0 auto;
-    padding:20px;
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
-    gap:30px;
-  ">
+<!-- 投稿エリア -->
+<div class="container">
 
-    <!-- 投稿カード -->
-    <div style="
-      background:white;
-      border-radius:16px;
-      box-shadow:0 4px 20px rgba(0,0,0,0.06);
-      overflow:hidden;
-    ">
+  <!-- 投稿1 -->
+  <div class="card">
 
-      <!-- 画像エリア -->
-      <div style="
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        gap:5px;
-      ">
+    <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
 
-        <img src="images/shinryoku1.jpg"
-             style="width:100%; aspect-ratio:1/1; object-fit:cover;">
+    <div class="sub-images">
+      <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
+      <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
+    </div>
 
-        <img src="images/shinryoku2.jpg"
-             style="width:100%; aspect-ratio:1/1; object-fit:cover;">
-
-        <img src="images/shinryoku3.jpg"
-             style="width:100%; aspect-ratio:1/1; object-fit:cover; grid-column: span 2;">
-      </div>
-
-      <!-- テキストエリア -->
-      <div style="padding:15px;">
-
-        <h3 style="margin:0 0 8px 0;">おにぎり割烹 新緑</h3>
-
-        <p style="margin:0; color:#555; font-size:14px;">
-          石川町｜鯛茶漬けセット ¥1,680
-        </p>
-
-        <p style="margin-top:8px; font-size:12px; color:#888;">
-          #和食 #横浜
-        </p>
-
-      </div>
+    <div class="text">
+      <h3>おにぎり割烹 新緑</h3>
+      <p>石川町｜鯛茶漬けセット ¥1,680</p>
+      <p style="margin-top:6px; font-size:12px; color:#888;">#和食 #横浜</p>
     </div>
 
   </div>
+
+
+  <!-- 投稿を増やすときはこのcardをコピー -->
+
+</div>
+
+<!-- モーダル -->
+<div class="modal" id="modal" onclick="closeModal()">
+  <img id="modalImg">
+</div>
+
+<script>
+function openModal(src){
+  document.getElementById("modal").style.display="flex";
+  document.getElementById("modalImg").src=src;
+}
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+</script>
 
 </body>
 </html>
