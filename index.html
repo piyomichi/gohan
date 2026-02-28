@@ -5,25 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ごはん記録</title>
 
-<!-- Leaflet（無料地図ライブラリ） -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f5f7;color:#111;}
-header{text-align:center;padding:20px;background:white;border-bottom:1px solid #eee;font-weight:600;}
-.search-box{text-align:center;padding:15px;background:white;}
-.search-box input{width:300px;max-width:90%;padding:10px;border-radius:20px;border:1px solid #ddd;}
-.filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px;background:white;}
-.filters button{border:none;background:#eee;padding:6px 14px;border-radius:20px;cursor:pointer;}
-.container{max-width:1100px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;}
-.card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,0.05);}
-.main-img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;}
-.text{padding:15px;}
-.map-btn{display:inline-block;margin-top:10px;padding:6px 12px;background:#111;color:white;text-decoration:none;border-radius:20px;font-size:12px;}
-#map{height:400px;margin:40px auto;max-width:1100px;border-radius:20px;}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
-.modal img{max-width:90%;max-height:90%;border-radius:12px;}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#f5f5f7;
+  color:#111;
+}
+
+/* ヘッダー */
+header{
+  text-align:center;
+  padding:20px;
+  font-size:22px;
+  font-weight:600;
+  background:white;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid #eee;
+}
+
+/* タグフィルター */
+.filters{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:15px;
+  background:white;
+}
+
+.filters button{
+  border:none;
+  background:#eee;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+  transition:0.2s;
+}
+
+.filters button:hover{
+  background:#111;
+  color:white;
+}
+
+/* 投稿グリッド */
+.container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+}
+
+.main-img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  cursor:pointer;
+}
+
+.sub-images{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+}
+
+.sub-images img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  cursor:pointer;
+}
+
+.text{
+  padding:18px;
+}
+
+.text h3{
+  margin:0 0 6px 0;
+}
+
+.meta{
+  font-size:13px;
+  color:#666;
+}
+
+.tags{
+  margin-top:8px;
+  font-size:12px;
+  color:#999;
+}
+
+/* 地図ボタン */
+.map-btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  background:#111;
+  color:white;
+  text-decoration:none;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* モーダル */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:14px;
+}
 </style>
 </head>
 
@@ -31,92 +146,48 @@ header{text-align:center;padding:20px;background:white;border-bottom:1px solid #
 
 <header>🍙 ごはん記録</header>
 
-<div class="search-box">
-  <input type="text" id="searchInput" placeholder="店名・エリアで検索">
+<!-- タグフィルター -->
+<div class="filters">
+  <button onclick="filterPosts('all')">すべて</button>
+  <button onclick="filterPosts('和食')">和食</button>
+  <button onclick="filterPosts('カフェ')">カフェ</button>
+  <button onclick="filterPosts('横浜')">横浜</button>
 </div>
 
-<div class="filters" id="tagFilters"></div>
+<div class="container">
 
-<div id="map"></div>
+  <!-- 投稿例 -->
+  <div class="card" data-tags="和食 横浜">
 
-<div class="container" id="postsContainer"></div>
+    <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
 
+    <div class="sub-images">
+      <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
+      <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
+    </div>
+
+    <div class="text">
+      <h3>おにぎり割烹 新緑</h3>
+      <div class="meta">石川町｜鯛茶漬けセット ¥1,680</div>
+      <div class="tags">#和食 #横浜</div>
+
+      <a class="map-btn" 
+         href="https://www.google.com/maps/search/?api=1&query=石川町+おにぎり割烹+新緑"
+         target="_blank">
+         📍 地図を見る
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- モーダル -->
 <div class="modal" id="modal" onclick="closeModal()">
   <img id="modalImg">
 </div>
 
 <script>
-
-// ====== 投稿データ ======
-const posts = [
-{
-  name:"おにぎり割烹 新緑",
-  area:"石川町",
-  price:"¥1,680",
-  tags:["和食","横浜"],
-  lat:35.4386,
-  lng:139.6425,
-  images:["images/shinryoku1.jpg","images/shinryoku2.jpg"]
-},
-{
-  name:"カフェ example",
-  area:"みなとみらい",
-  price:"¥1,200",
-  tags:["カフェ","横浜"],
-  lat:35.455,
-  lng:139.631,
-  images:["images/shinryoku1.jpg"]
-}
-];
-
-// ====== タグ自動生成 ======
-const allTags = [...new Set(posts.flatMap(p=>p.tags))];
-const tagContainer=document.getElementById("tagFilters");
-tagContainer.innerHTML='<button onclick="filterTag(\'all\')">すべて</button>';
-allTags.forEach(tag=>{
-  tagContainer.innerHTML+=`<button onclick="filterTag('${tag}')">${tag}</button>`;
-});
-
-// ====== 投稿表示 ======
-const container=document.getElementById("postsContainer");
-
-function displayPosts(list){
-  container.innerHTML="";
-  list.forEach(post=>{
-    container.innerHTML+=`
-      <div class="card" data-tags="${post.tags.join(" ")}">
-        <img src="${post.images[0]}" class="main-img" onclick="openModal('${post.images[0]}')">
-        <div class="text">
-          <h3>${post.name}</h3>
-          <div>${post.area}｜${post.price}</div>
-          <div style="font-size:12px;color:#888;">#${post.tags.join(" #")}</div>
-          <a class="map-btn" target="_blank"
-             href="https://www.google.com/maps/search/?api=1&query=${post.name}">
-             📍 地図を見る
-          </a>
-        </div>
-      </div>
-    `;
-  });
-}
-displayPosts(posts);
-
-// ====== タグフィルター ======
-function filterTag(tag){
-  if(tag==="all"){displayPosts(posts);return;}
-  displayPosts(posts.filter(p=>p.tags.includes(tag)));
-}
-
-// ====== 検索機能 ======
-document.getElementById("searchInput").addEventListener("input",function(){
-  const keyword=this.value.toLowerCase();
-  displayPosts(posts.filter(p=>
-    p.name.toLowerCase().includes(keyword) ||
-    p.area.toLowerCase().includes(keyword)
-  ));
-});
-
-// ====== モーダル ======
 function openModal(src){
   document.getElementById("modal").style.display="flex";
   document.getElementById("modalImg").src=src;
@@ -125,15 +196,17 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 
-// ====== 地図 ======
-const map=L.map('map').setView([35.44,139.64],12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-posts.forEach(post=>{
-  L.marker([post.lat,post.lng]).addTo(map)
-   .bindPopup(`<b>${post.name}</b><br>${post.area}`);
-});
-
+function filterPosts(tag){
+  const cards=document.querySelectorAll(".card");
+  cards.forEach(card=>{
+    if(tag==="all"){
+      card.style.display="block";
+    }else{
+      const tags=card.dataset.tags;
+      card.style.display=tags.includes(tag)?"block":"none";
+    }
+  });
+}
 </script>
 
 </body>
