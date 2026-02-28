@@ -238,91 +238,41 @@ header{
 </div>
 <script>
 
-const posts = [
-  {
-    name: "おにぎり割烹 新緑",
-    area: "石川町",
-    price: "¥1,680",
-    tags: ["和食","横浜"],
-    images: [
-      "images/shinryoku1.jpg",
-      "images/shinryoku2.jpg",
-      "images/shinryoku3.jpg"
-    ],
-    map: "石川町 おにぎり割烹 新緑"
-  }
-];
+let currentImages = [];
 
-const container = document.querySelector(".container");
-
-function renderPosts(){
-  container.innerHTML = "";
-
-  posts.forEach(post => {
-
-    let imagesHTML = post.images.map(img =>
-      `<img src="${img}" onclick="openModal(this, ${JSON.stringify(post.images)})">`
-    ).join("");
-
-    container.innerHTML += `
-      <div class="card" data-tags="${post.tags.join(" ")}">
-
-        <div class="image-slider">
-          ${imagesHTML}
-        </div>
-
-        <div class="text">
-          <h3>${post.name}</h3>
-          <div class="meta">${post.area}｜${post.price}</div>
-          <div class="tags">#${post.tags.join(" #")}</div>
-
-          <a class="map-btn"
-             href="https://www.google.com/maps/search/?api=1&query=${post.map}"
-             target="_blank">
-             📍 地図を見る
-          </a>
-        </div>
-
-      </div>
-    `;
-  });
-}
-
-renderPosts();
-
-
-// ===== モーダル =====
-
-function openModal(clickedImg, imagesArray){
-
+function openModal(clickedSrc){
   const modal = document.getElementById("modal");
   const slider = document.getElementById("modalSlider");
 
+  // 同じカード内の画像を取得
+  const card = event.target.closest(".card");
+  const imgs = card.querySelectorAll("img");
+
+  currentImages = [];
   slider.innerHTML = "";
 
-  imagesArray.forEach(img=>{
-    slider.innerHTML += `<img src="${img}">`;
+  imgs.forEach(img=>{
+    currentImages.push(img.src);
+    const newImg = document.createElement("img");
+    newImg.src = img.src;
+    slider.appendChild(newImg);
   });
 
   modal.style.display = "flex";
 
-  const index = imagesArray.indexOf(clickedImg.src);
+  // クリックした画像の位置へスクロール
+  const index = currentImages.indexOf(clickedSrc);
   slider.scrollLeft = slider.clientWidth * index;
 }
 
-function closeModal(){
-  document.getElementById("modal").style.display="none";
-}
-
+// モーダルを閉じる
 document.getElementById("modal").addEventListener("click",function(e){
-  if(e.target.id==="modal"){
-    closeModal();
+  if(e.target.id === "modal"){
+    this.style.display = "none";
   }
 });
 
-
-// ===== タグフィルター =====
-
+// タグフィルター（そのまま）
 function filterPosts(tag){
   const cards=document.querySelectorAll(".card");
   cards.forEach(card=>{
@@ -334,7 +284,9 @@ function filterPosts(tag){
     }
   });
 }
-
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
 </script>
 </body>
 </html>
