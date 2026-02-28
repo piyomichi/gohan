@@ -168,6 +168,26 @@ header{
 .modal-slider::-webkit-scrollbar{
   display:none;
 }  
+  /* 閉じるボタン */
+
+.close-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  border:none;
+  font-size:28px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  backdrop-filter:blur(6px);
+}
+
+.close-btn:hover{
+  background:rgba(255,255,255,0.4);
+}
 </style>
 </head>
 
@@ -213,9 +233,9 @@ header{
 
 <!-- モーダル -->
 <div class="modal" id="modal">
+  <button class="close-btn" onclick="closeModal()">×</button>
   <div class="modal-slider" id="modalSlider"></div>
 </div>
-
 <script>
 
 let currentImages = [];
@@ -264,7 +284,9 @@ function filterPosts(tag){
     }
   });
 }
-
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
 </script>
 </body>
 </html>
