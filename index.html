@@ -214,7 +214,26 @@ header{
   padding:30px;
 }
 
+  .main-slider{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+}
+
+  /* スワイプ↓ */  
   
+.main-slider img{
+  flex:0 0 100%;
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  scroll-snap-align:start;
+}
+
+.main-slider::-webkit-scrollbar{
+  display:none;
+}
 </style>
    
 </head>
