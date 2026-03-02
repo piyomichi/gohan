@@ -206,6 +206,15 @@ header{
   margin:5px 0 10px 0;
 }
   
+  /* 横並び投稿 */  
+.container{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap:30px;
+  padding:30px;
+}
+
+  
 </style>
    
 </head>
@@ -249,7 +258,8 @@ header{
       </a>
     </div>
 
-
+</div> 
+  
       <div class="card" data-tags="和食 横浜">
 
     <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
