@@ -193,9 +193,15 @@ header{
 
 .modal-slider img{
   flex:0 0 100%;
-  max-width:100%;
+  width:100vw;
+  height:100vh;
   object-fit:contain;
   scroll-snap-align:center;
+}
+
+  .modal-slider img{
+  user-select:none;
+  -webkit-user-drag:none;
 }
 
 .modal-slider::-webkit-scrollbar{
