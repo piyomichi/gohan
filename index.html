@@ -338,7 +338,7 @@ header{
   
       <div class="card" data-tags="和食 横浜">
 
- <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
+ <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(event,this.src)">
 
 <div class="hidden-images">
   <img src="images/shinryoku2.jpg">
@@ -424,12 +424,12 @@ header{
 
 let currentImages = [];
 
-function openModal(clickedSrc){
+function openModal(e, clickedSrc){
   const modal = document.getElementById("modal");
   const slider = document.getElementById("modalSlider");
 
   // 同じカード内の画像を取得
-  const card = event.target.closest(".card");
+ const card = e.target.closest(".card");
   const imgs = card.querySelectorAll(".main-img, .hidden-images img");
   currentImages = [];
   slider.innerHTML = "";
