@@ -502,7 +502,7 @@ function searchPosts(){
 
 
   
-document.querySelectorAll(".sub-images").forEach(box=>{
+document.querySelectorAll(".sub-images").forEach(box => {
 
   const imgs = box.querySelectorAll("img");
 
@@ -510,26 +510,32 @@ document.querySelectorAll(".sub-images").forEach(box=>{
 
     const extra = imgs.length - 3;
 
-    imgs.forEach((img,index)=>{
-      if(index > 2){
+    imgs.forEach((img, i) => {
+      if(i >= 3){
         img.style.display = "none";
       }
     });
 
-    const last = imgs[2].parentElement;
+    const third = imgs[2];
 
-    imgs[2].classList.add("more-images");
-
-    const overlay = document.createElement("span");
+    const overlay = document.createElement("div");
     overlay.innerText = "+" + extra;
 
-    imgs[2].parentElement.style.position="relative";
-    imgs[2].after(overlay);
+    overlay.style.position = "absolute";
+    overlay.style.inset = "0";
+    overlay.style.background = "rgba(0,0,0,0.6)";
+    overlay.style.color = "white";
+    overlay.style.fontSize = "20px";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+
+    third.parentElement.style.position = "relative";
+    third.parentElement.appendChild(overlay);
 
   }
 
 });
-  
   
 </script>
 </body>
