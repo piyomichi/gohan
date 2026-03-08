@@ -184,7 +184,6 @@ header{
 
 .modal-slider{
   display:flex;
-  flex-direction:row;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   width:100%;
@@ -192,18 +191,9 @@ header{
 }
 
 .modal-slider img{
-  flex:0 0 100%;
-  width:100vw;
-  height:100vh;
+  min-width:100%;
   object-fit:contain;
   scroll-snap-align:center;
-
-  pointer-events:none;
-  user-select:none;
-}
-  .modal-slider img{
-  user-select:none;
-  -webkit-user-drag:none;
 }
 
 .modal-slider::-webkit-scrollbar{
@@ -291,13 +281,6 @@ header{
   text-decoration:underline;
 }
 
-.hidden-images{
-  display:none;
-}
-
-  .modal-slider{
-  -webkit-overflow-scrolling:touch;
-}
   
 </style>
    
@@ -346,13 +329,13 @@ header{
   
       <div class="card" data-tags="和食 横浜">
 
- <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(event,this.src)">
+    <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
 
-<div class="hidden-images">
-  <img src="images/shinryoku2.jpg">
-  <img src="images/shinryoku3.jpg">
-</div>
-  
+    <div class="sub-images">
+      <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
+      <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
+    </div>
+
     <div class="text">
       <h3>おにぎり割烹 新緑</h3>
        <p class="date">2026.03.01</p>
@@ -432,13 +415,14 @@ header{
 
 let currentImages = [];
 
-function openModal(e, clickedSrc){
+function openModal(clickedSrc){
   const modal = document.getElementById("modal");
   const slider = document.getElementById("modalSlider");
 
   // 同じカード内の画像を取得
- const card = e.target.closest(".card");
-  const imgs = card.querySelectorAll(".main-img, .hidden-images img");
+  const card = event.target.closest(".card");
+  const imgs = card.querySelectorAll("img");
+
   currentImages = [];
   slider.innerHTML = "";
 
@@ -500,40 +484,6 @@ function searchPosts(){
 }
 
 
-const slider = document.getElementById("modalSlider");
-
-let isDown = false;
-let startX;
-let scrollLeft;
-
-slider.addEventListener("mousedown", (e)=>{
-  isDown = true;
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener("mouseleave", ()=>{
-  isDown = false;
-});
-
-slider.addEventListener("mouseup", ()=>{
-  isDown = false;
-});
-
-slider.addEventListener("mousemove", (e)=>{
-  if(!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - slider.offsetLeft;
-  const walk = (x - startX) * 2;
-  slider.scrollLeft = scrollLeft - walk;
-});
-  
-
-slider.addEventListener("dragstart", e => e.preventDefault());
-
-  document.querySelectorAll(".modal-slider img").forEach(img=>{
-  img.addEventListener("dragstart", e => e.preventDefault());
-});
   
 </script>
 </body>
