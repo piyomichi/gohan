@@ -430,8 +430,7 @@ function openModal(clickedSrc){
 
   // 同じカード内の画像を取得
   const card = event.target.closest(".card");
-  const imgs = card.querySelectorAll("img");
-
+  const imgs = card.querySelectorAll(".main-img, .hidden-images img");
   currentImages = [];
   slider.innerHTML = "";
 
