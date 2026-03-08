@@ -197,8 +197,10 @@ header{
   height:100vh;
   object-fit:contain;
   scroll-snap-align:center;
-}
 
+  pointer-events:none;
+  user-select:none;
+}
   .modal-slider img{
   user-select:none;
   -webkit-user-drag:none;
@@ -528,6 +530,10 @@ slider.addEventListener("mousemove", (e)=>{
   
 
 slider.addEventListener("dragstart", e => e.preventDefault());
+
+  document.querySelectorAll(".modal-slider img").forEach(img=>{
+  img.addEventListener("dragstart", e => e.preventDefault());
+});
   
 </script>
 </body>
