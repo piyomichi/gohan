@@ -282,22 +282,7 @@ header{
 }
 
 
-.more-images{
-  position:relative;
-}
-
-.more-images span{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  color:white;
-  font-size:20px;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
+  
 </style>
    
 </head>
@@ -345,13 +330,13 @@ header{
   
       <div class="card" data-tags="和食 横浜">
 
-   <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
+ <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
 
-    <div class="sub-images">
-      <img src="images/shinryoku2.jpg" onclick="openModal(this.src)">
-      <img src="images/shinryoku3.jpg" onclick="openModal(this.src)">
-    </div>
-
+<div class="hidden-images">
+  <img src="images/shinryoku2.jpg">
+  <img src="images/shinryoku3.jpg">
+</div>
+  
     <div class="text">
       <h3>おにぎり割烹 新緑</h3>
        <p class="date">2026.03.01</p>
@@ -502,41 +487,7 @@ function searchPosts(){
 
 
   
-document.querySelectorAll(".sub-images").forEach(box => {
 
-  const imgs = box.querySelectorAll("img");
-
-  if(imgs.length > 3){
-
-    const extra = imgs.length - 3;
-
-    imgs.forEach((img, i) => {
-      if(i >= 3){
-        img.style.display = "none";
-      }
-    });
-
-    const third = imgs[2];
-
-    const overlay = document.createElement("div");
-    overlay.innerText = "+" + extra;
-
-    overlay.style.position = "absolute";
-    overlay.style.inset = "0";
-    overlay.style.background = "rgba(0,0,0,0.6)";
-    overlay.style.color = "white";
-    overlay.style.fontSize = "20px";
-    overlay.style.display = "flex";
-    overlay.style.alignItems = "center";
-    overlay.style.justifyContent = "center";
-
-    third.parentElement.style.position = "relative";
-    third.parentElement.appendChild(overlay);
-
-  }
-
-});
-  
 </script>
 </body>
    
