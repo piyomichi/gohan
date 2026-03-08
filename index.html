@@ -184,6 +184,7 @@ header{
 
 .modal-slider{
   display:flex;
+  flex-direction:row;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   width:100%;
@@ -191,7 +192,8 @@ header{
 }
 
 .modal-slider img{
-  min-width:100%;
+  flex:0 0 100%;
+  max-width:100%;
   object-fit:contain;
   scroll-snap-align:center;
 }
@@ -283,6 +285,10 @@ header{
 
 .hidden-images{
   display:none;
+}
+
+  .modal-slider{
+  -webkit-overflow-scrolling:touch;
 }
   
 </style>
