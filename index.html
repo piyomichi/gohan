@@ -281,7 +281,23 @@ header{
   text-decoration:underline;
 }
 
-  
+
+.more-images{
+  position:relative;
+}
+
+.more-images span{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  color:white;
+  font-size:20px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 </style>
    
 </head>
@@ -484,6 +500,36 @@ function searchPosts(){
 }
 
 
+
+  
+document.querySelectorAll(".sub-images").forEach(box=>{
+
+  const imgs = box.querySelectorAll("img");
+
+  if(imgs.length > 3){
+
+    const extra = imgs.length - 3;
+
+    imgs.forEach((img,index)=>{
+      if(index > 2){
+        img.style.display = "none";
+      }
+    });
+
+    const last = imgs[2].parentElement;
+
+    imgs[2].classList.add("more-images");
+
+    const overlay = document.createElement("span");
+    overlay.innerText = "+" + extra;
+
+    imgs[2].parentElement.style.position="relative";
+    imgs[2].after(overlay);
+
+  }
+
+});
+  
   
 </script>
 </body>
