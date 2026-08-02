@@ -393,8 +393,8 @@ header{
         <a class="map-btn" href="https://maps.app.goo.gl/rQREKgwNAzWMvdT98" target="_blank">
           📍 地図を見る
         </a>
-        <a class="map-btn shop-info-btn" href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkanagawa%2FA1401%2FA140105%2F14090408%2F" target="_blank" rel="nofollow noopener noreferrer">
-          🏪 お店情報
+        <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow">
+          <img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3776090&pid=892661121" height="1" width="0" border="0">🏪 お店情報
         </a>
       </div>
     </div>
@@ -1019,6 +1019,7 @@ function searchPosts(){
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.map-btn').forEach((btn) => {
     if (btn.classList.contains('shop-info-btn')) return;
+    if (btn.closest('.card')?.querySelector('h3')?.textContent.includes('はしたて')) return;
 
     const shopLink = document.createElement('a');
     shopLink.className = 'map-btn shop-info-btn';
