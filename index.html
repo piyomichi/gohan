@@ -360,7 +360,7 @@ header{
   <!-- 投稿エリア↓↓↓ -->
 
   
-      <div class="card" data-tags="和食 横浜 ランチ おにぎり">
+      <div class="card" data-tags="和食 横浜 ランチ おにぎり" data-shop-link="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkanagawa%2FA1401%2FA140105%2F14090408%2F">
 
     <img src="images/shinryoku1.jpg" class="main-img" onclick="openModal(this.src)">
 
@@ -383,14 +383,11 @@ header{
            target="_blank">
            📍 地図を見る
         </a>
-        <a class="map-btn shop-info-btn" href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkanagawa%2FA1401%2FA140105%2F14090408%2F" rel="nofollow noopener noreferrer" target="_blank">
-          🏪 お店情報
-        </a>
       </div>
     </div>
   </div>
 
-  <div class="card" data-tags="和食 日本料理 丼 麺 京都" data-shop-link="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F">
+  <div class="card" data-tags="和食 日本料理 丼 麺 京都" data-shop-link="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F">
     <img src="images/hasitate2024.JPG" class="main-img" onclick="openModal(this.src)">
 
     <div class="sub-images">
@@ -405,9 +402,6 @@ header{
       <div class="action-links">
         <a class="map-btn" href="https://maps.app.goo.gl/rQREKgwNAzWMvdT98" target="_blank">
           📍 地図を見る
-        </a>
-        <a class="map-btn shop-info-btn" href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow noopener noreferrer" target="_blank">
-          🏪 お店情報
         </a>
       </div>
     </div>
@@ -1031,14 +1025,22 @@ function searchPosts(){
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.card').forEach((card) => {
+    const shopLinkUrl = card.getAttribute('data-shop-link');
+    if (!shopLinkUrl) return;
+
     const mapBtn = card.querySelector('.map-btn');
     if (!mapBtn) return;
 
-    const shopLinkUrl = card.getAttribute('data-shop-link');
-    const existingShopLink = Array.from(card.querySelectorAll('a')).find((link) =>
-      link.textContent.includes('お店情報')
-    );
-    if (!shopLinkUrl) return;
+    let wrapper = card.querySelector('.action-links');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'action-links';
+      const parent = mapBtn.parentNode;
+      parent.insertBefore(wrapper, mapBtn);
+      wrapper.appendChild(mapBtn);
+    }
+
+    const existingShopLink = wrapper.querySelector('.shop-info-btn');
     if (existingShopLink) {
       existingShopLink.href = shopLinkUrl;
       existingShopLink.target = '_blank';
@@ -1053,12 +1055,6 @@ document.addEventListener('DOMContentLoaded', () => {
     shopLink.rel = 'nofollow noopener noreferrer';
     shopLink.textContent = '🏪 お店情報';
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'action-links';
-
-    const parent = mapBtn.parentNode;
-    parent.insertBefore(wrapper, mapBtn);
-    wrapper.appendChild(mapBtn);
     wrapper.appendChild(shopLink);
   });
 });
