@@ -158,6 +158,24 @@ header{
   font-size:12px;
 }
 
+.action-links{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.shop-info-btn{
+  background:#f2f2f2;
+  color:#111;
+  border:1px solid #ddd;
+}
+
+.shop-info-btn:hover{
+  background:#111;
+  color:white;
+}
+
 /* モーダル */
 .modal{
   display:none;
@@ -976,7 +994,26 @@ function searchPosts(){
   });
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.map-btn').forEach((btn) => {
+    if (btn.classList.contains('shop-info-btn')) return;
 
+    const shopLink = document.createElement('a');
+    shopLink.className = 'map-btn shop-info-btn';
+    shopLink.href = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkanagawa%2FA1401%2FA140105%2F14090408%2F';
+    shopLink.target = '_blank';
+    shopLink.rel = 'nofollow noopener noreferrer';
+    shopLink.textContent = '🏪 お店情報';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'action-links';
+
+    const parent = btn.parentNode;
+    parent.insertBefore(wrapper, btn);
+    wrapper.appendChild(btn);
+    wrapper.appendChild(shopLink);
+  });
+});
   
 </script>
 </body>
