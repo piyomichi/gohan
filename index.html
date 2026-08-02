@@ -1035,9 +1035,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!mapBtn) return;
 
     const shopLinkUrl = card.getAttribute('data-shop-link');
-    const existingShopLink = card.querySelector('a[rel="nofollow"]');
+    const existingShopLink = Array.from(card.querySelectorAll('a')).find((link) =>
+      link.textContent.includes('お店情報')
+    );
     if (!shopLinkUrl) return;
-    if (existingShopLink && existingShopLink.textContent.includes('お店情報')) return;
+    if (existingShopLink) {
+      existingShopLink.href = shopLinkUrl;
+      existingShopLink.target = '_blank';
+      existingShopLink.rel = 'nofollow noopener noreferrer';
+      return;
+    }
 
     const shopLink = document.createElement('a');
     shopLink.className = 'map-btn shop-info-btn';
