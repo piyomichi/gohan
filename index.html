@@ -148,14 +148,18 @@ header{
   
 /* 地図ボタン */
 .map-btn{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   margin-top:10px;
-  padding:6px 12px;
+  padding:7px 13px;
   background:#111;
   color:white;
   text-decoration:none;
   border-radius:20px;
   font-size:12px;
+  line-height:1.2;
+  white-space:nowrap;
 }
 
 .action-links{
@@ -163,6 +167,13 @@ header{
   gap:8px;
   flex-wrap:wrap;
   margin-top:10px;
+  align-items:center;
+}
+
+.action-links a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .shop-info-btn{
@@ -393,8 +404,8 @@ header{
         <a class="map-btn" href="https://maps.app.goo.gl/rQREKgwNAzWMvdT98" target="_blank">
           📍 地図を見る
         </a>
-        <a class="map-btn shop-info-btn" href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow" target="_blank">
-          <img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3776090&pid=892661121" height="1" width="0" border="0">🏪 お店情報
+        <a class="map-btn shop-info-btn" href="https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow noopener noreferrer" target="_blank">
+          🏪 お店情報
         </a>
       </div>
     </div>
