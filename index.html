@@ -377,7 +377,7 @@ header{
     </div>
   </div>
 
-  <div class="card" data-tags="和食 日本料理 丼 麺 京都">
+  <div class="card" data-tags="和食 日本料理 丼 麺 京都" data-shop-link="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F">
     <img src="images/hasitate2024.JPG" class="main-img" onclick="openModal(this.src)">
 
     <div class="sub-images">
@@ -393,7 +393,7 @@ header{
         <a class="map-btn" href="https://maps.app.goo.gl/rQREKgwNAzWMvdT98" target="_blank">
           📍 地図を見る
         </a>
-        <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow">
+        <a class="map-btn shop-info-btn" href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkyoto%2FA2601%2FA260101%2F26006654%2F" rel="nofollow" target="_blank">
           <img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3776090&pid=892661121" height="1" width="0" border="0">🏪 お店情報
         </a>
       </div>
@@ -1017,13 +1017,18 @@ function searchPosts(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.map-btn').forEach((btn) => {
-    if (btn.classList.contains('shop-info-btn')) return;
-    if (btn.closest('.card')?.querySelector('h3')?.textContent.includes('はしたて')) return;
+  document.querySelectorAll('.card').forEach((card) => {
+    const mapBtn = card.querySelector('.map-btn');
+    if (!mapBtn) return;
+
+    const shopLinkUrl = card.getAttribute('data-shop-link');
+    const existingShopLink = card.querySelector('a[rel="nofollow"]');
+    if (!shopLinkUrl) return;
+    if (existingShopLink && existingShopLink.textContent.includes('お店情報')) return;
 
     const shopLink = document.createElement('a');
     shopLink.className = 'map-btn shop-info-btn';
-    shopLink.href = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3776090&pid=892661121&vc_url=https%3A%2F%2Ftabelog.com%2Fkanagawa%2FA1401%2FA140105%2F14090408%2F';
+    shopLink.href = shopLinkUrl;
     shopLink.target = '_blank';
     shopLink.rel = 'nofollow noopener noreferrer';
     shopLink.textContent = '🏪 お店情報';
@@ -1031,9 +1036,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.createElement('div');
     wrapper.className = 'action-links';
 
-    const parent = btn.parentNode;
-    parent.insertBefore(wrapper, btn);
-    wrapper.appendChild(btn);
+    const parent = mapBtn.parentNode;
+    parent.insertBefore(wrapper, mapBtn);
+    wrapper.appendChild(mapBtn);
     wrapper.appendChild(shopLink);
   });
 });
